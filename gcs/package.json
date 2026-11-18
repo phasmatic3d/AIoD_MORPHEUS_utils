@@ -1,0 +1,19 @@
+{
+  "name": "access-gcs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "list": "node list.js",
+    "upload": "node upload.js",
+    "fetch": "node fetch.js",
+    "create": "node create.js",
+    "submit": "node submit.js",
+    "process": "node process.js",
+    "complete": "node complete.js"
+  },
+  "dependencies": {
+    "@google-cloud/firestore": "^9.4.1",
+    "@google-cloud/storage": "^9.0.0",
+    "firebase-admin": "^14.5.1"
+  }
+}
