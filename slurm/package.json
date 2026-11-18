@@ -1,0 +1,24 @@
+{
+  "name": "slurm-caller",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Submit and check MeluXina Slurm jobs over SSH",
+  "type": "module",
+  "main": "slurm_caller.js",
+  "exports": {
+    ".": "./slurm_caller.js"
+  },
+  "bin": {
+    "slurm-caller": "./cli.js"
+  },
+  "scripts": {
+    "submit": "node cli.js submit",
+    "status": "node cli.js status"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ssh2": "^1.17.0"
+  }
+}
