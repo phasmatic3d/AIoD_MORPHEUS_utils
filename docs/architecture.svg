@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="700" viewBox="0 0 980 700" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <style>
+      .msg   { stroke: #333; stroke-width: 1.4; fill: none; }
+      .ret   { stroke: #333; stroke-width: 1.4; fill: none; stroke-dasharray: 6 4; }
+      .life  { stroke: #9aa3ad; stroke-width: 1; stroke-dasharray: 4 4; }
+      .lbl   { fill: #1f2328; text-anchor: middle; paint-order: stroke; stroke: #fff; stroke-width: 5px; stroke-linejoin: round; }
+      .note  { fill: #6a737d; font-style: italic; font-size: 12px; text-anchor: middle; paint-order: stroke; stroke: #fff; stroke-width: 5px; stroke-linejoin: round; }
+      .grp   { font-weight: 600; font-size: 14px; text-anchor: middle; }
+      .part  { font-weight: 600; text-anchor: middle; fill: #1f2328; }
+    </style>
+  </defs>
+
+  <rect width="980" height="700" fill="#ffffff"/>
+
+  <!-- groups -->
+  <rect x="25"  y="10" width="150" height="675" rx="10" fill="#eef4ff" stroke="#b6cdf5"/>
+  <text x="100" y="32" class="grp" fill="#2f5fb3">Client / backend</text>
+
+  <rect x="240" y="10" width="370" height="675" rx="10" fill="#edf8f0" stroke="#b5dfc0"/>
+  <text x="425" y="32" class="grp" fill="#2a7a45">MeluXina</text>
+
+  <rect x="640" y="10" width="315" height="675" rx="10" fill="#fff5e6" stroke="#f1d3a1"/>
+  <text x="797" y="32" class="grp" fill="#a3640c">Firebase</text>
+
+  <!-- participants -->
+  <rect x="35"  y="46" width="130" height="38" rx="6" fill="#fff" stroke="#5b8bd9" stroke-width="1.5"/>
+  <text x="100" y="70" class="part">Client</text>
+  <rect x="255" y="46" width="130" height="38" rx="6" fill="#fff" stroke="#4fa76a" stroke-width="1.5"/>
+  <text x="320" y="70" class="part">Login node</text>
+  <rect x="440" y="46" width="160" height="38" rx="6" fill="#fff" stroke="#4fa76a" stroke-width="1.5"/>
+  <text x="520" y="70" class="part">Compute node (GPU)</text>
+  <rect x="655" y="46" width="130" height="38" rx="6" fill="#fff" stroke="#d99a3a" stroke-width="1.5"/>
+  <text x="720" y="70" class="part">Storage bucket</text>
+  <rect x="815" y="46" width="130" height="38" rx="6" fill="#fff" stroke="#d99a3a" stroke-width="1.5"/>
+  <text x="880" y="70" class="part">Firestore</text>
+
+  <!-- lifelines -->
+  <line x1="100" y1="84" x2="100" y2="672" class="life"/>
+  <line x1="320" y1="84" x2="320" y2="672" class="life"/>
+  <line x1="520" y1="84" x2="520" y2="672" class="life"/>
+  <line x1="720" y1="84" x2="720" y2="672" class="life"/>
+  <line x1="880" y1="84" x2="880" y2="672" class="life"/>
+
+  <!-- job running on the compute node -->
+  <rect x="514" y="315" width="12" height="275" fill="#d4eedb" stroke="#4fa76a"/>
+
+  <!-- client side -->
+  <line x1="100" y1="140" x2="880" y2="140" class="msg" marker-end="url(#arr)"/>
+  <text x="490" y="132" class="lbl">gcs/create.js → new session (INITIALIZED)</text>
+
+  <line x1="100" y1="180" x2="720" y2="180" class="msg" marker-end="url(#arr)"/>
+  <text x="410" y="172" class="lbl">gcs/upload.js → &lt;id&gt;/video.mp4</text>
+
+  <line x1="100" y1="220" x2="880" y2="220" class="msg" marker-end="url(#arr)"/>
+  <text x="490" y="212" class="lbl">gcs/submit.js → state SUBMITTED</text>
+
+  <line x1="100" y1="265" x2="320" y2="265" class="msg" marker-end="url(#arr)"/>
+  <text x="210" y="257" class="lbl">slurm/cli.js submit &lt;id&gt;</text>
+  <text x="210" y="282" class="note">SSH</text>
+
+  <line x1="320" y1="315" x2="514" y2="315" class="msg" marker-end="url(#arr)"/>
+  <text x="417" y="307" class="lbl">sbatch job.sh &lt;id&gt;</text>
+
+  <!-- job steps -->
+  <line x1="720" y1="365" x2="526" y2="365" class="ret" marker-end="url(#arr)"/>
+  <text x="623" y="357" class="lbl">1. fetch &lt;id&gt;/video.mp4</text>
+  <text x="623" y="382" class="note">stage in</text>
+
+  <line x1="526" y1="415" x2="880" y2="415" class="msg" marker-end="url(#arr)"/>
+  <text x="703" y="407" class="lbl">2. mark PROCESSING</text>
+
+  <path d="M526,450 H566 V478 H528" class="msg" marker-end="url(#arr)"/>
+  <text x="576" y="468" class="lbl" style="text-anchor:start">3. run pipeline in Apptainer</text>
+
+  <line x1="526" y1="525" x2="720" y2="525" class="msg" marker-end="url(#arr)"/>
+  <text x="623" y="517" class="lbl">4. upload model.fbx / .glb</text>
+  <text x="623" y="542" class="note">stage out</text>
+
+  <line x1="526" y1="575" x2="880" y2="575" class="msg" marker-end="url(#arr)"/>
+  <text x="703" y="567" class="lbl">5. mark COMPLETED</text>
+
+  <!-- status check -->
+  <line x1="100" y1="630" x2="320" y2="630" class="msg" marker-end="url(#arr)"/>
+  <text x="210" y="622" class="lbl">slurm/cli.js status &lt;job&gt;</text>
+  <text x="210" y="647" class="note">SSH → sacct</text>
+</svg>
